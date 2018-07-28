@@ -1,13 +1,7 @@
 const app = require("./api.js");
-const JsonGenerator = require("./json_generator/json_generator.js");
+const JsonGenerator = require("./json_generator/index.js");
 
-var testA = {
-    abandon: ["age"],
-    name: "Aaron Robert",
-    age: 20
-};
-
-console.log(JsonGenerator.toStr(testA));
+projectList = [];
 
 const port = process.env.PORT || 3000;
 app.listen(3000, () => console.log(`Listening on port ${port} ...`));

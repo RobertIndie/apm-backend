@@ -13,7 +13,12 @@ var Project = {
         project.currentIteration = {};
         project.iterationList = [];
 
+        project.AddIteration = function(iteration){
+            this.iterationList.push(iteration);
+        }
+
         return project;
     }
 }
+
 module.exports = Project;
