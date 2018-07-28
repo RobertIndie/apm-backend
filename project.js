@@ -1,3 +1,5 @@
+const DateComparison = require("./date_comparison/index.js");
+
 var Project = {
     OPEN: 'oepn',
     CLOSE: 'close',
@@ -14,7 +16,12 @@ var Project = {
         project.iterationList = [];
 
         project.AddIteration = function(iteration){
-            //if()
+            if(!DateComparison.isIncluded(
+                {start:this.startDate,end:this.endDate},
+                {start:iteration.startDate,end:iteration.endDate}
+            )){
+                return false;
+            }
             this.iterationList.push(iteration);
         }
 

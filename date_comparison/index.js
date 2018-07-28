@@ -1,8 +1,9 @@
 module.exports = {
-    isValid ({begin,end}){
-        return begin <= end;
+    isValid ({start,end}){
+        return new Date(Date.parse(start)) <= new Date(Date.parse(end));
     },
-    isIncluded ({begin1,end1},{begin2,end2}){
-        return begin1>=begin2 && end1<=end2;
+    isIncluded ({start1,end1},{start2,end2}){
+        return new Date(Date.parse(start1))>=new Date(Date.parse(start2)) 
+        && new Date(Date.parse(end1))<=new Date(Date.parse(end2));
     }
 }
