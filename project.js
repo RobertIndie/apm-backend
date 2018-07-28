@@ -14,6 +14,7 @@ var Project = {
         project.iterationList = [];
 
         project.AddIteration = function(iteration){
+            //if()
             this.iterationList.push(iteration);
         }
 
