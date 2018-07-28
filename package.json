@@ -1,0 +1,22 @@
+{
+  "name": "apm-backend",
+  "version": "0.0.0",
+  "description": "apm-backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RobertIndie/apm-backend.git"
+  },
+  "keywords": [
+    "apm"
+  ],
+  "author": "Aaron Robert",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/RobertIndie/apm-backend/issues"
+  },
+  "homepage": "https://github.com/RobertIndie/apm-backend#readme"
+}
