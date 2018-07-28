@@ -18,5 +18,10 @@
   "bugs": {
     "url": "https://github.com/RobertIndie/apm-backend/issues"
   },
-  "homepage": "https://github.com/RobertIndie/apm-backend#readme"
+  "homepage": "https://github.com/RobertIndie/apm-backend#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "joi": "^13.4.0"
+  }
 }
