@@ -19,3 +19,5 @@ var Task = {
         task.deadline = "";
     }
 }
+
+module.exports = Task;
