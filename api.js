@@ -5,6 +5,7 @@ const joi = require('joi');
 const db = require("./database.js");
 const User = require("./user");
 const Project = require("./project");
+const Iteration = require("./iteration");
 const ObjectLoader = require("./object_loader/index.js");
 
 app.use(express.json());
@@ -61,8 +62,25 @@ app.get('/api/project/:id',(req,res)=>{
         
     db.hmget(`projects:${req.params.id}`,project.metadata.getDatabaseField).then(val=>{
         if(res[0]===null)return res.send("null");
-        user = ObjectLoader.load(project,val);
+        project = ObjectLoader.load(project,val);
         res.send(project);
+    });
+});
+
+app.get('/api/project/:id/iterations',(req,res)=>{
+    db.hget(`projects:${req.params.id}`,"iterationList").then(val=>{
+        if(val===null)return res.send("null");
+        res.send(val);
+    })
+});
+
+app.get('/api/iteration/:id',(req,res)=>{
+    var iteration = Iteration.createNew();
+        
+    db.hmget(`iterations:${req.params.id}`,iteration.metadata.getDatabaseField).then(val=>{
+        if(res[0]===null)return res.send("null");
+        iteration = ObjectLoader.load(iteration,val);
+        res.send(iteration);
     });
 });
 

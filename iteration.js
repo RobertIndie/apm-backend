@@ -1,17 +1,31 @@
+const Util = require("./util")
+
 var Iteration = {
     OPEN: 'open',
     CLOSE: 'close',
     createNew: function(){
         var iteration = {};
-        iteration.abadon = ["taskList","data"];
-        iteration.projectID = -1;
-        iteration.name = "";
-        iteration.description = "";
-        iteration.startDate = "";
-        iteration.endDate = "";
-        iteration.status = this.OPEN;
-        iteration.taskList = [];
-        iteration.data = {};
+        var metadata = {};
+        metadata.database = [
+            "projectID",
+            "name",
+            "description",
+            "startDate",
+            "endDate",
+            "status",
+            "taskList",
+            "data"
+        ];
+        metadata.arrayField = [
+            "taskList"
+        ];
+        metadata.getDBAbandon = [
+            "taskList",
+            "data"
+        ];
+
+        metadata.getDatabaseField = Util.arrayMinus(metadata.database,metadata.getDBAbandon);
+        iteration.metadata = metadata;
 
         return iteration;
     }
