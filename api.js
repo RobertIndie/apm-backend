@@ -6,6 +6,7 @@ const db = require("./database.js");
 const User = require("./user");
 const Project = require("./project");
 const Iteration = require("./iteration");
+const Task = require("./task");
 const ObjectLoader = require("./object_loader/index.js");
 
 app.use(express.json());
@@ -71,7 +72,7 @@ app.get('/api/project/:id/iterations',(req,res)=>{
     db.hget(`projects:${req.params.id}`,"iterationList").then(val=>{
         if(val===null)return res.send("null");
         res.send(val);
-    })
+    });
 });
 
 app.get('/api/iteration/:id',(req,res)=>{
@@ -81,6 +82,30 @@ app.get('/api/iteration/:id',(req,res)=>{
         if(res[0]===null)return res.send("null");
         iteration = ObjectLoader.load(iteration,val);
         res.send(iteration);
+    });
+});
+
+app.get('/api/iteration/:id/iteration_data',(req,res)=>{
+    db.hget(`iterations:${req.params.id}`,"data").then(val=>{
+        if(val===null)return res.send("null");
+        res.send(val);
+    });
+});
+
+app.get('/api/iteration/:id/taskwall',(req,res)=>{
+    db.hget(`iterations:${req.params.id}`,"taskList").then(val=>{
+        if(val===null)return res.send("null");
+        res.send(val);
+    });
+});
+
+app.get('/api/task/:id',(req,res)=>{
+    var task = Task.createNew();
+        
+    db.hmget(`tasks:${req.params.id}`,task.metadata.getDatabaseField).then(val=>{
+        if(res[0]===null)return res.send("null");
+        task = ObjectLoader.load(task,val);
+        res.send(task);
     });
 });
 

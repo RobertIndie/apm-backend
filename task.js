@@ -1,3 +1,5 @@
+const Util = require("./util");
+
 var Task = {
     PLANNING: "planning",
     DEVELOPING: "developing",
@@ -9,14 +11,28 @@ var Task = {
     NIEC_TO_HAVE: "nice_to_have",
     createNew: function(){
         var task = {};
-        task.abadon = [];
-        task.iterationID = -1;
-        task.name = "";
-        task.description = "";
-        task.developerList = [];
-        task.status = this.PLANNING;
-        task.priority = this.HIGH;
-        task.deadline = "";
+        var metadata = {};
+        metadata.database = [
+            "projectID",
+            "iterationID",
+            "name",
+            "description",
+            "developerList",
+            "status",
+            "priority",
+            "deadline"
+        ];
+        metadata.arrayField = [
+            "developerList",
+        ];
+        metadata.getDBAbandon = [
+
+        ];
+
+        metadata.getDatabaseField = Util.arrayMinus(metadata.database,metadata.getDBAbandon);
+        task.metadata = metadata;
+        
+        return task;
     }
 }
 
