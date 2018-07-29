@@ -4,7 +4,7 @@ const app = express();
 const joi = require('joi');
 const db = require("./database.js");
 const User = require("./user");
-const JsonGenerator = require("./json_generator/index.js");
+const ObjectLoader = require("./object_loader/index.js");
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -18,10 +18,7 @@ app.get('/api/user/:name/profile',function(req,res){
         
     db.hmget(`users:${req.params.name}`,user.metadata.getDatabaseField).then(val=>{
         if(res[0]===null)return res.send("null");
-        for(var i=0;i<val.length;i++){
-            user[user.metadata.getDatabaseField[i]] = val[i];
-        }
-        user.metadata = undefined;
+        user = ObjectLoader.load(user,val);
         res.send(user);
     });
 });
@@ -56,6 +53,10 @@ app.get('/api/project/',(req,res)=>{
         });
         res.send(result);
     });
+});
+
+app.get('/api/project/:id',(req,res)=>{
+
 });
 
 module.exports = app;

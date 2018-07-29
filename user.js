@@ -11,6 +11,11 @@ var User = {
             "currentTaskList",
             "doneTaskList",
             "contributeData"];
+        metadata.arrayField = [
+            "currentProjectList",
+            "currentTaskList",
+            "doneTaskList"
+        ];
         metadata.getDBAbandon = ["password","doneTaskList","contributeData"];
 
         metadata.getDatabaseField = Util.arrayMinus(metadata.database,metadata.getDBAbandon);
