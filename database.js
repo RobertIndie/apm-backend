@@ -15,7 +15,8 @@ db = {
     client: dbClient,
     get: promisify(dbClient.get).bind(dbClient),
     hmget: promisify(dbClient.hmget).bind(dbClient),
-    hget: promisify(dbClient.hget).bind(dbClient)
+    hget: promisify(dbClient.hget).bind(dbClient),
+    smembers: promisify(dbClient.smembers).bind(dbClient)
 };
 
 module.exports = db;

@@ -29,21 +29,28 @@ app.get('/api/user/:name/profile',function(req,res){
 app.get('/api/user/:name/contribute',function(req,res){
     db.hget(`users:${req.params.name}`,"contributeData").then(val=>{
         if(val===null)return res.send("null");
-        res.send(JSON.parse(val));
+        res.send(val);
     });
 });
 
 app.get('/api/user/:name/todolist',(req,res)=>{
     db.hget(`users:${req.params.name}`,"currentTaskList").then(val=>{
         if(val===null)return res.send("null");
-        res.send(JSON.parse(val));
+        res.send(val);
     });
 });
 
 app.get('/api/user/:name/doneList',(req,res)=>{
     db.hget(`users:${req.params.name}`,"doneTaskList").then(val=>{
         if(val===null)return res.send("null");
-        res.send(JSON.parse(val));
+        res.send(val);
+    });
+});
+
+app.get('/api/project/',(req,res)=>{
+    db.smembers('projectList').then(val=>{
+        if(val===null)return res.send("null");
+        res.send(val);
     });
 });
 
