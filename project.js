@@ -5,15 +5,28 @@ var Project = {
     CLOSE: 'close',
     createNew: function(){
         var project = {}
-        project.abadon = ["developerList","iterationList"];
-        project.name = "";
-        project.description = "";
-        project.startDate = "";
-        project.endDate = "";
-        project.status = this.OPEN;
-        project.developerList = [];
-        project.currentIteration = {};
-        project.iterationList = [];
+        var metadata = {};
+        metadata.database = [
+            "name",
+            "description",
+            "startDate",
+            "endDate",
+            "status",
+            "developerList",
+            "currentIteration",
+            "iterationList"
+        ];
+        metadata.arrayField = [
+            "developerList",
+            "iterationList"
+        ];
+        metadata.getDBAbandon = [
+            "developerList",
+            "iterationList"
+        ];
+
+        metadata.getDatabaseField = Util.arrayMinus(metadata.database,metadata.getDBAbandon);
+        project.metadata = metadata;
 
         project.AddIteration = function(iteration){
             if(!DateComparison.isIncluded(
