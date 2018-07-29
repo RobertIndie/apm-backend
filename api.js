@@ -16,9 +16,7 @@ app.get('/',(req,res)=>{
 });
 
 app.get('/api/user/profile/:name',function(req,res){
-    db.get("test").then(val=>{
-        res.send(val);
-    });
+    User.getUser(req.params.name,user=>res.send(user));
 });
 
 module.exports = app;

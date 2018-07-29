@@ -1,25 +1,33 @@
 const Util = require("./util");
 
-
-
 var User = {
     db: {},
-    getUser(name){
+    getUser(name,callback){
         var user = this.createNew();
         
-        this.db.get()
+        this.db.hmget(`users:${name}`,user.metadata.getDatabaseField).then(res=>{
+            for(var i=0;i<res.length;i++){
+                user[user.metadata.getDatabaseField[i]] = res[i];
+            }
+            user.metadata = undefined;
+            callback(user);
+        });
     },
     createNew (){
         var user = {};
-        user.database = [
-            "name","password",
+        var metadata = {};
+        metadata.database = [
+            "name",
+            "password",
             "currentProjectList",
             "currentTaskList",
             "doneTaskList",
             "contributeData"];
-        user.getDBAbandon = ["password","doneTaskList","contributeData"];
+        metadata.getDBAbandon = ["password","doneTaskList","contributeData"];
 
-        user.getDatabaseField = Util.arrayMinus(user.database,user.getDBAbandon);
+        metadata.getDatabaseField = Util.arrayMinus(metadata.database,metadata.getDBAbandon);
+
+        user.metadata = metadata;
         return user;
     }
 };
