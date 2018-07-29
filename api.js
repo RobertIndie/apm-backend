@@ -27,7 +27,10 @@ app.get('/api/user/:name/profile',function(req,res){
 });
 
 app.get('/api/user/:name/contribute',function(req,res){
-    
+    db.get(`usersContribute:${req.params.name}`).then(val=>{
+        if(val===null)return res.send("null");
+        //todo
+    });
 });
 
 module.exports = app;
