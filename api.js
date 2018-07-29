@@ -29,7 +29,21 @@ app.get('/api/user/:name/profile',function(req,res){
 app.get('/api/user/:name/contribute',function(req,res){
     db.hget(`users:${req.params.name}`,"contributeData").then(val=>{
         if(val===null)return res.send("null");
-        return JSON.parse(val);
+        res.send(JSON.parse(val));
+    });
+});
+
+app.get('/api/user/:name/todolist',(req,res)=>{
+    db.hget(`users:${req.params.name}`,"currentTaskList").then(val=>{
+        if(val===null)return res.send("null");
+        res.send(JSON.parse(val));
+    });
+});
+
+app.get('/api/user/:name/doneList',(req,res)=>{
+    db.hget(`users:${req.params.name}`,"doneTaskList").then(val=>{
+        if(val===null)return res.send("null");
+        res.send(JSON.parse(val));
     });
 });
 
