@@ -4,6 +4,7 @@ const app = express();
 const joi = require('joi');
 const db = require("./database.js");
 const User = require("./user");
+const Project = require("./project");
 const ObjectLoader = require("./object_loader/index.js");
 
 app.use(express.json());
@@ -56,7 +57,13 @@ app.get('/api/project/',(req,res)=>{
 });
 
 app.get('/api/project/:id',(req,res)=>{
-    
+    var project = Project.createNew();
+        
+    db.hmget(`projects:${req.params.id}`,project.metadata.getDatabaseField).then(val=>{
+        if(res[0]===null)return res.send("null");
+        user = ObjectLoader.load(project,val);
+        res.send(project);
+    });
 });
 
 module.exports = app;
