@@ -50,7 +50,11 @@ app.get('/api/user/:name/doneList',(req,res)=>{
 app.get('/api/project/',(req,res)=>{
     db.smembers('projectList').then(val=>{
         if(val===null)return res.send("null");
-        res.send(val);
+        result = [];
+        val.forEach(element => {
+            result.push(JSON.parse(element));
+        });
+        res.send(result);
     });
 });
 
