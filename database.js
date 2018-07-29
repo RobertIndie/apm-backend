@@ -14,7 +14,8 @@ dbClient.on("ready",function (){
 db = {
     client: dbClient,
     get: promisify(dbClient.get).bind(dbClient),
-    hmget: promisify(dbClient.hmget).bind(dbClient)
+    hmget: promisify(dbClient.hmget).bind(dbClient)，
+    hget: promisify(dbClient.hget).bind(dbClient)
 };
 
 module.exports = db;

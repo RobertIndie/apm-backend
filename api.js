@@ -27,9 +27,9 @@ app.get('/api/user/:name/profile',function(req,res){
 });
 
 app.get('/api/user/:name/contribute',function(req,res){
-    db.get(`usersContribute:${req.params.name}`).then(val=>{
+    db.hget(`users:${req.params.name}`,"contributeData").then(val=>{
         if(val===null)return res.send("null");
-        //todo
+        return JSON.parse(val);
     });
 });
 
