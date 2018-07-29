@@ -1,15 +1,13 @@
-Array.prototype.remove=function(dx){
-    if(isNaN(dx)||dx>this.length){return false;}
-    for(var i=0,n=0;i<this.length;i++){
-　　　　if(this[i]!=this[dx]){
-　　　　　　this[n++]=this[i]
-　　　　}
-　　}
-　　this.length-=1
-　};
-
-Array.prototype.minus = arr=>{
-    arr.forEach(element => {
-        this.remove(element);
-    });
-};
+module.exports = {
+    arrayMinus (a,b) {
+        b.forEach(element => {
+            for(var i=0;i<a.length;i++){
+                if(a[i]===element){
+                    a.splice(i,1);
+                    break;
+                }
+            }
+        });
+        return a;
+    }
+}

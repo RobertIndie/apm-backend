@@ -1,4 +1,6 @@
-require("./util");
+const Util = require("./util");
+
+
 
 var User = {
     init (dbClient) {
@@ -13,8 +15,9 @@ var User = {
         user.database = ["name","password","currentProjectList","currentTaskList","doneTaskList","contributeData"];
         user.getDBAbandon = ["password","doneTaskList","contributeData"];
 
+        user.getDatabaseField = Util.arrayMinus(user.database,user.getDBAbandon);
         return user;
     }
 };
-
+var user = User.createNew();
 module.exports = User;
