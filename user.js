@@ -1,13 +1,17 @@
+require("./util");
+
 var User = {
-    createNew: function(){
+    init (dbClient) {
+        this.dbClient = dbClient;
+    },
+    getUser(name){
+        var user = this.createNew();
+        
+    },
+    createNew (){
         var user = {};
-        user.abandon = ["doneTaskList","contributeData"];
-        user.name = "";
-        user.password = "";
-        user.currentProjectList = [];
-        user.currentTaskList = [];
-        user.doneTaskList = [];
-        user.contributeData = {};
+        user.database = ["name","password","currentProjectList","currentTaskList","doneTaskList","contributeData"];
+        user.getDBAbandon = ["password","doneTaskList","contributeData"];
 
         return user;
     }
