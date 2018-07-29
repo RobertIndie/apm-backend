@@ -3,16 +3,20 @@ const Util = require("./util");
 
 
 var User = {
-    init (dbClient) {
-        this.dbClient = dbClient;
-    },
+    db: {},
     getUser(name){
         var user = this.createNew();
         
+        this.db.get()
     },
     createNew (){
         var user = {};
-        user.database = ["name","password","currentProjectList","currentTaskList","doneTaskList","contributeData"];
+        user.database = [
+            "name","password",
+            "currentProjectList",
+            "currentTaskList",
+            "doneTaskList",
+            "contributeData"];
         user.getDBAbandon = ["password","doneTaskList","contributeData"];
 
         user.getDatabaseField = Util.arrayMinus(user.database,user.getDBAbandon);
