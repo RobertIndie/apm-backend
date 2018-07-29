@@ -6,6 +6,7 @@ var User = {
         var user = this.createNew();
         
         this.db.hmget(`users:${name}`,user.metadata.getDatabaseField).then(res=>{
+            if(res[0]===null)return callback("null");
             for(var i=0;i<res.length;i++){
                 user[user.metadata.getDatabaseField[i]] = res[i];
             }
