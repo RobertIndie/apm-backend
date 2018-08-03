@@ -113,16 +113,16 @@ app.get('/api/task/:id',(req,res)=>{
 
 app.post('/api/iteration/create',async (req,res)=>{
     const result = Iteration.validate(req.body);
-
     if(result.error)return res.status(400).send(result.error.message);
     var id = ID.generate();
     if(!await db.exists(`projects:${req.body.projectID}`)) return res.status(400).send("项目不存在");
+    db.lock(req.body.projectID);
     var projectIterationList = JSON.parse(await db.hget(`projects:${req.body.projectID}`,'iterationList'));
     projectIterationList.push(id);
     await db.hset(`projects:${req.body.projectID}`,'iterationList',JSON.stringify(projectIterationList));
+    db.unlock(req.body.projectID);
     await db.hmset(`iterations:${id}`,Util.fieldAndValuePack(req.body));
     res.send('');
-    
 });
 
 
