@@ -117,7 +117,7 @@ app.post('/api/iteration/create',async (req,res)=>{
     if(result.error)return res.status(400).send(result.error.message);
     var id = ID.generate();
     if(!await db.exists(`projects:${req.body.projectID}`)) return res.status(400).send("项目不存在");
-    projectIterationList = JSON.parse(await db.hget(`projects:${req.body.projectID}`,'iterationList'));
+    var projectIterationList = JSON.parse(await db.hget(`projects:${req.body.projectID}`,'iterationList'));
     projectIterationList.push(id);
     await db.hset(`projects:${req.body.projectID}`,'iterationList',JSON.stringify(projectIterationList));
     await db.hmset(`iterations:${id}`,Util.fieldAndValuePack(req.body));
