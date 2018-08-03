@@ -109,4 +109,11 @@ app.get('/api/task/:id',(req,res)=>{
     });
 });
 
+app.post('/api/iteration/create',(req,res)=>{
+    const result = Iteration.validate(req.body);
+
+    if(result.error)return res.status(400).send(result.error.message);
+    res.send('');
+});
+
 module.exports = app;
