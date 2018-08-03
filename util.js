@@ -9,5 +9,13 @@ module.exports = {
             }
         });
         return a;
+    },
+    fieldAndValuePack (o) {
+        var result = [];
+        for(var field in o){
+            result.push(field);
+            result.push(o[field]);
+        }
+        return result;
     }
 }

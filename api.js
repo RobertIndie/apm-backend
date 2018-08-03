@@ -2,12 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const joi = require('joi');
+const ID = require('shortid');
 const db = require("./database.js");
 const User = require("./user");
 const Project = require("./project");
 const Iteration = require("./iteration");
 const Task = require("./task");
 const ObjectLoader = require("./object_loader/index.js");
+const Util = require('./util');
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -109,11 +111,21 @@ app.get('/api/task/:id',(req,res)=>{
     });
 });
 
-app.post('/api/iteration/create',(req,res)=>{
+app.post('/api/iteration/create',async (req,res)=>{
     const result = Iteration.validate(req.body);
 
     if(result.error)return res.status(400).send(result.error.message);
+    var id = ID.generate();
+    if(!await db.exists(`projects:${req.body.projectID}`)) return res.status(400).send("项目不存在");
+    projectIterationList = JSON.parse(await db.hget(`projects:${req.body.projectID}`,'iterationList'));
+    projectIterationList.push(id);
+    await db.hset(`projects:${req.body.projectID}`,'iterationList',JSON.stringify(projectIterationList));
+    await db.hmset(`iterations:${id}`,Util.fieldAndValuePack(req.body));
     res.send('');
+    
 });
+
+
+
 
 module.exports = app;
