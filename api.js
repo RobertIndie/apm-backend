@@ -81,7 +81,7 @@ app.get('/api/iteration/:id',(req,res)=>{
     var iteration = Iteration.createNew();
         
     db.hmget(`iterations:${req.params.id}`,iteration.metadata.getDatabaseField).then(val=>{
-        if(res[0]===null)return res.send("null");
+        if(val[0]===null)return res.send("null");
         iteration = ObjectLoader.load(iteration,val);
         res.send(iteration);
     });
@@ -97,8 +97,9 @@ app.get('/api/task/:id',(req,res)=>{
     var task = Task.init();
     
     db.hmget(`tasks:${req.params.id}`,task.metadata.getDatabaseField).then(val=>{
-        if(res[0]===null)return res.send("null");
+        if(val[0]===null)return res.send("null");
         task = ObjectLoader.load(task,val);
+        console.log(task);
         res.send(task);
     });
 });
