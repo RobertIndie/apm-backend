@@ -99,7 +99,6 @@ app.get('/api/task/:id',(req,res)=>{
     db.hmget(`tasks:${req.params.id}`,task.metadata.getDatabaseField).then(val=>{
         if(val[0]===null)return res.send("null");
         task = ObjectLoader.load(task,val);
-        console.log(task);
         res.send(task);
     });
 });
@@ -119,7 +118,7 @@ app.post('/api/iteration/create',async (req,res)=>{
     await db.unlock(key);
 
     await db.hmset(`iterations:${id}`,Util.fieldAndValuePack(iteration));
-    res.send('');
+    res.send(id);
 });
 
 app.post('/api/task/create',async (req,res)=>{
@@ -138,7 +137,7 @@ app.post('/api/task/create',async (req,res)=>{
     await db.unlock(key);
 
     await db.hmset(`tasks:${id}`,Util.fieldAndValuePack(task));
-    res.send('');
+    res.send(id);
 });
 
 module.exports = app;

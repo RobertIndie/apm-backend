@@ -13,13 +13,6 @@ module.exports = {
     fieldAndValuePack (o) {
         var result = [];
         if(o.metadata!==undefined){
-            if(o.metadata.database!==undefined){
-                o.metadata.database.forEach(element => {
-                    if(!(element in o)){
-                        o[element] = "";
-                    }
-                });
-            }
             if(o.metadata.arrayField!==undefined){
                 o.metadata.arrayField.forEach(element => {
                     if(!(element in o)){
@@ -31,6 +24,13 @@ module.exports = {
                 o.metadata.arrayField.forEach(element => {
                     if(!(element in o)){
                         o[element] = "{}";
+                    }
+                });
+            }
+            if(o.metadata.database!==undefined){
+                o.metadata.database.forEach(element => {
+                    if(!(element in o)){
+                        o[element] = "";
                     }
                 });
             }
