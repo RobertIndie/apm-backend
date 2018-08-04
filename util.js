@@ -15,6 +15,7 @@ module.exports = {
         return false;
     },
     fieldAndValuePack (o) {
+        delete o.metadata;
         var result = [];
         for(var field in o){
             result.push(field);
