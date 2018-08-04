@@ -4,8 +4,8 @@ const joi = require("joi");
 var Iteration = {
     OPEN: 'open',
     CLOSE: 'close',
-    createNew: function(){
-        var iteration = {};
+    init (o) {
+        var iteration = o===null?{}:o;
         var metadata = {};
         metadata.database = [
             "projectID",
