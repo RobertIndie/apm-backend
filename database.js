@@ -39,17 +39,35 @@ db = {
     }
 };
 
-async function deleteAllIterations () {
-    await db.hset('projects:testProjectID','iterationList',"[]");
-    var iterationList = await db.keys('*');
-    for(var i in iterationList){
-        if(iterationList[i].substring(0,'iterations:'.length)==='iterations:'){
-            await db.del(iterationList[i]);
-            console.log(`已删除 ${iterationList[i]}`);
+async function deleteAllTasks () {
+    var keyList = await db.keys('*');
+    for(var i in keyList){
+        if(keyList[i].substring(0,'iterations:'.length)==='iterations:'){
+            db.hset(keyList[i],'taskList','[]');
+        }
+        else if(keyList[i].substring(0,'tasks:'.length)==='tasks:'){
+            db.del(keyList[i]);
+            console.log(`已删除 ${keyList[i]}`);
         }
     }
 }
 
-//deleteAllIterations();
+async function deleteAllIterations () {
+    db.hset('projects:testProjectID','iterationList',"[]");
+    var keyList = await db.keys('*');
+    for(var i in keyList){
+        if(keyList[i].substring(0,'iterations:'.length)==='iterations:'){
+            db.del(keyList[i]);
+            console.log(`已删除 ${keyList[i]}`);
+        }
+    }
+}
+
+async function debug () {
+    await deleteAllTasks();
+    await deleteAllIterations();
+}
+
+debug();
 
 module.exports = db;
