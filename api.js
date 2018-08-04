@@ -112,7 +112,7 @@ app.post('/api/iteration/create',async (req,res)=>{
 
     var key = `projects:${iteration.projectID}`;
     await db.lock(key);
-    var projectIterationList = JSON.parse(await db.hget(`projects:${iteration.projectID}`,'iterationList'));
+    var projectIterationList = JSON.parse(await db.hget(key,'iterationList'));
     projectIterationList.push(id);
     await db.hset(key,'iterationList',JSON.stringify(projectIterationList));
     await db.unlock(key);
@@ -124,12 +124,20 @@ app.post('/api/iteration/create',async (req,res)=>{
 app.post('/api/task/create',async (req,res)=>{
     const result = Task.validate(req.body);
     if(result.error)return res.status(400).send(result.error.message);
+    var iteration = Iteration.init(req.body);
     var id = ID.generate();
     if(!await db.exists(`projects:${req.body.projectID}`)) return res.status(400).send("项目不存在");
     if(!await db.exists(`iterations:${req.body.iterationID}`)) return res.status(400).send("迭代不存在");
 
     var key = `iterations:${req.body.iterationID}`;
     await db.lock(key);
+    var iterationTaskList = JSON.parse(await db.hget(key,'taskList'));
+    iterationTaskList.push(id);
+    await db.hset(key,'taskList',JSON.stringify(iterationTaskList));
+    await db.unlock(key);
+
+    await db.hmset(`tasks:${id}`,Util.fieldAndValuePack(task));
+    res.send('');
 });
 
 module.exports = app;

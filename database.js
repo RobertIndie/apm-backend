@@ -29,7 +29,6 @@ db = {
         var isLocked = 1;
         do{
             isLocked = await db.exists(`locks:${key}`);
-            console.log(isLocked);
         }
         while(isLocked && !(await Util.sleep(10)));
         await db.set(`locks:${key}`,[1,'PX',10000]);
@@ -51,6 +50,6 @@ async function deleteAllIterations () {
     }
 }
 
-//deleteAllIterations();
+deleteAllIterations();
 
 module.exports = db;
