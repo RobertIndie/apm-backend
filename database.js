@@ -31,8 +31,8 @@ db = {
             isLocked = await db.exists(`locks:${key}`);
             console.log(isLocked);
         }
-        while(isLocked && !(await Util.sleep(10)) && !(console.log(`访问了一个被锁的值${key}`)));
-        await db.set(`locks:${key}`,1);
+        while(isLocked && !(await Util.sleep(10)));
+        await db.set(`locks:${key}`,[1,'PX',10000]);
     },
 
     async unlock (key) {
