@@ -111,10 +111,7 @@ app.get('/api/task/:id',(req,res)=>{
     });
 });
 
-var _id = 0;
 app.post('/api/iteration/create',async (req,res)=>{
-    var t_id = _id;
-    _id++;
     const result = Iteration.validate(req.body);
     if(result.error)return res.status(400).send(result.error.message);
     var id = ID.generate();
