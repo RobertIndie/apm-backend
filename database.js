@@ -51,6 +51,6 @@ async function deleteAllIterations () {
     }
 }
 
-deleteAllIterations();
+//deleteAllIterations();
 
 module.exports = db;

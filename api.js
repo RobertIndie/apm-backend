@@ -87,18 +87,10 @@ app.get('/api/iteration/:id',(req,res)=>{
     });
 });
 
-app.get('/api/iteration/:id/iteration_data',(req,res)=>{
-    db.hget(`iterations:${req.params.id}`,"data").then(val=>{
-        if(val===null)return res.send("null");
-        res.send(val);
-    });
-});
-
-app.get('/api/iteration/:id/taskwall',(req,res)=>{
-    db.hget(`iterations:${req.params.id}`,"taskList").then(val=>{
-        if(val===null)return res.send("null");
-        res.send(val);
-    });
+app.get('/api/iteration/:id/:field',async (req,res)=>{
+    const val = await db.hget(`iterations:${req.params.id}`,req.params.field);
+    if(val===null)return res.send('null');
+    res.send(val);
 });
 
 app.get('/api/task/:id',(req,res)=>{
@@ -123,12 +115,11 @@ app.post('/api/iteration/create',async (req,res)=>{
     await db.hset(`projects:${req.body.projectID}`,'iterationList',JSON.stringify(projectIterationList));
     await db.unlock(req.body.projectID);
 
-    console.log(`${t_id}:解锁`);
     await db.hmset(`iterations:${id}`,Util.fieldAndValuePack(req.body));
     res.send('');
 });
 
-
+app.post('/api/task')
 
 
 module.exports = app;
