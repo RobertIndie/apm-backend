@@ -121,22 +121,21 @@ app.post('/api/iteration/create',async (req,res)=>{
     if(!await db.exists(`projects:${req.body.projectID}`)) return res.status(400).send("项目不存在");
 
     
-    //db.lock(req.body.projectID);
-    var isLocked = 1;
-        do{
-            isLocked = await db.exists(`locks:${req.body.projectID}`);
-            console.log(isLocked);
-        }
-        while(isLocked && !(await Util.sleep(10)) && !(console.log(`访问了一个被锁的值${req.body.projectID}`)));
-        await db.set(`locks:${req.body.projectID}`,1);
+    await db.lock(req.body.projectID);
+    // var isLocked = 1;
+    //     do{
+    //         isLocked = await db.exists(`locks:${req.body.projectID}`);
+    //         console.log(isLocked);
+    //     }
+    //     while(isLocked && !(await Util.sleep(10)) && !(console.log(`访问了一个被锁的值${req.body.projectID}`)));
+    //     await db.set(`locks:${req.body.projectID}`,1);
     console.log(`${t_id}:锁住`);
     var projectIterationList = JSON.parse(await db.hget(`projects:${req.body.projectID}`,'iterationList'));
     projectIterationList.push(id);
     if(t_id===0) await new Promise(resolve => setTimeout(resolve,5000));
     await db.hset(`projects:${req.body.projectID}`,'iterationList',JSON.stringify(projectIterationList));
     
-    //db.unlock(req.body.projectID);
-    await db.del(`locks:${req.body.projectID}`);
+    await db.unlock(req.body.projectID);
     console.log(`${t_id}:解锁`);
     await db.hmset(`iterations:${id}`,Util.fieldAndValuePack(req.body));
     res.send('');
