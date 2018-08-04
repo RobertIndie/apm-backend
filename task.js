@@ -10,8 +10,8 @@ var Task = {
     MIDDLE: "middle",
     LOW: "low",
     NIEC_TO_HAVE: "nice_to_have",
-    init (o) {
-        var task = o===null?{}:o;
+    init (o=undefined) {
+        var task = o===undefined?{}:o;
         var metadata = {};
         metadata.database = [
             "projectID",
@@ -25,6 +25,9 @@ var Task = {
         ];
         metadata.arrayField = [
             "developerList",
+        ];
+        metadata.objField = [
+            
         ];
         metadata.getDBAbandon = [
 

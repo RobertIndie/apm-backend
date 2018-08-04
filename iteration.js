@@ -20,6 +20,9 @@ var Iteration = {
         metadata.arrayField = [
             "taskList"
         ];
+        metadata.objField = [
+            "data"
+        ];
         metadata.getDBAbandon = [
             "taskList",
             "data"
