@@ -4,7 +4,7 @@ const joi = require("joi");
 var Iteration = {
     OPEN: 'open',
     CLOSE: 'close',
-    init (o) {
+    init (o=undefined) {
         var iteration = o===undefined?{}:o;
         var metadata = {};
         metadata.database = [
