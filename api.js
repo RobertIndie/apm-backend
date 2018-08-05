@@ -78,7 +78,7 @@ app.get('/api/project/:id/iterations',(req,res)=>{
 });
 
 app.get('/api/iteration/:id',(req,res)=>{
-    var iteration = Iteration.createNew();
+    var iteration = Iteration.init();
         
     db.hmget(`iterations:${req.params.id}`,iteration.metadata.getDatabaseField).then(val=>{
         if(val[0]===null)return res.send("null");

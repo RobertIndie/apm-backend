@@ -5,7 +5,7 @@ var Iteration = {
     OPEN: 'open',
     CLOSE: 'close',
     init (o) {
-        var iteration = o===null?{}:o;
+        var iteration = o===undefined?{}:o;
         var metadata = {};
         metadata.database = [
             "projectID",

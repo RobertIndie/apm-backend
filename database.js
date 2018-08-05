@@ -68,6 +68,6 @@ async function debug () {
     await deleteAllIterations();
 }
 
-debug();
+//debug();
 
 module.exports = db;
