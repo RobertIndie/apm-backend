@@ -21,6 +21,9 @@ var Project = {
             "developerList",
             "iterationList"
         ];
+        metadata.objField = [
+            
+        ];
         metadata.getDBAbandon = [
             "developerList",
             "iterationList"
